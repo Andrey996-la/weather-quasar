@@ -75,6 +75,41 @@ interface IWeatherData {
   };
 }
 
+const mockWeatherData = {
+  data: {
+    coord: { lon: 39.9081, lat: 57.5875 },
+    weather: [
+      { id: 800, main: 'Clear', description: 'clear sky', icon: '01n' },
+    ],
+    base: 'stations',
+    main: {
+      temp: -15.06,
+      feels_like: -21.59,
+      temp_min: -15.06,
+      temp_max: -15.06,
+      pressure: 1009,
+      humidity: 78,
+      sea_level: 1009,
+      grnd_level: 993,
+    },
+    visibility: 10000,
+    wind: { speed: 3, deg: 150 },
+    clouds: { all: 0 },
+    dt: 1734617814,
+    sys: {
+      type: 1,
+      id: 9023,
+      country: 'RU',
+      sunrise: 1734588033,
+      sunset: 1734611675,
+    },
+    timezone: 10800,
+    id: 513487,
+    name: 'Ozerki',
+    cod: 200,
+  },
+};
+
 const $q = useQuasar();
 const search = ref('');
 const weatherData = ref<IWeatherData | null>(null);
@@ -112,7 +147,10 @@ const getWetherByCoords = async () => {
     const weatherUrl = `${apiUrl}?APPID=${apiKey}&lat=${lat.value}&lon=${lon.value}&units=metric`;
 
     // Получаем данные о погоде
-    const response = await $axios(weatherUrl);
+    const response = $q.platform.is.electron
+      ? mockWeatherData
+      : await $axios(weatherUrl);
+
     search.value = response.data.name;
     weatherData.value = response.data;
   } catch (error) {
