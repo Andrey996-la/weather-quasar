@@ -189,7 +189,6 @@ const getWetherBySearch = async () => {
 
     // Получаем данные о погоде
     const response = await $axios(weatherUrl);
-    console.log(response);
     weatherData.value = response.data;
   } catch (error) {
     // Обработка ошибки получения данных

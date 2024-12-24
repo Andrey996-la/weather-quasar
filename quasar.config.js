@@ -190,6 +190,8 @@ module.exports = configure(function (/* ctx */) {
 
         // Windows only
         // win32metadata: { ... }
+
+        // platform: 'win32' // ['darwin || mas'(macos), 'win32'(windows), ]
       },
 
       builder: {
